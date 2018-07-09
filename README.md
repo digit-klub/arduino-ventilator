@@ -1,2 +1,13 @@
-# arduino-ventilator
-Itt megtanulhatod hogyan szabályozd egy ventilátor fordulatszámát a hőmérséklethez képest
+# Ventilátor
+Itt megtanulhatod hogyan szabályozd egy ventilátor fordulatszámát a hőmérséklethez képest.
+
+## Figyelmeztetés
+Alább megtalálod hogyan kösd be és programozd fel az Arduinodat. Egy rossz bekötéssel akár tönkre is teheted őket, vagy jobb esetben csak felforrósítod őket. Mindig kérd egy felnőtt segítségét, amikor szerelsz és ha valamit nem értetek vagy a leírás nem egyértelmű, keressetek meg minket. Addig soha ne kapcsold be a berendezést, amíg legalább kétszer meg nem győződtél a helyes bekötésről. Ha nem működik először húzd ki a tápcsatlakozókat, csak az után nyúlj hozzá, mert megégetheted magad.
+
+## Bevezetés
+A táborban elsőként az egyenáramú motorok fordulatszám szabályozásával ismerkedtünk meg. Készlet amit kaptatok egy 12 voltos (röviden _12V_) feszültséggel működő [ventillátort](https://www.hestore.hu/prod_10022522.html) tartalmaz. Ez a ventilátor _6-13.8V_-ig terjedő feszültségről üzemeltethető és a fordulatszáma is így változtatható, amivel több problémát is takar. Egyrészt a vezérléshez használt és a csomagban kapott [Arduino](https://www.hestore.hu/prod_10035527.html) _5V_-ról üzemel. Ez önmagában nem elég a ventilátor elindításához. A másik probléma, hogy ha elég is lenne, az Arduino, csak úgy mint az összes digitális eszköz, nem képes _0_ és _5V_ között átmenetet létrehozni. Egy lábán vagy van jel, amely esetben _5V_ vagy nincs jel, amely esetben 0V mérhető rajta. Hogyan tudjuk tehát a ventilátort elindítani és a feszültségét szabályozni?
+
+### Impulzus szélesség moduláció
+A digitális technika egyik vívmánya az un. _Impulzus szélesség moduláció_, angolul _Pulse-Width Modulation_ röviden _PWM_. A táborban beszéltünk arról mi is az a _PWM_ de a mélyebb megértés érdekében javaslom, hogy nézzétek meg _mod4_ [YouTube videóját](https://www.youtube.com/watch?v=jlESJ28Gy2w), ha kell többször is. Lényegében az történik, hogy elhelyezünk egy tranzisztort a kapcsolásunkban, ami egy elektronikus kapcsolóként fog üzemelni. A ventilátort rendkívül gyorsan ki és be kapcsolgatva, mielőtt az leállna elérjük, hogy az ne a maximális fordulaton üzemeljen.
+####BD135
+A csomagban a [BD135](https://www.hestore.hu/prod_10020815.html) jelű tranzisztort találjátok, ami maximálisan _50V_ kapcsolására képes _50MHz_ frekvencián, ami azt jelenti, hogy másodpercenként _50 milliószor_ képes ki és bekapcsolni. Mindkét paraméter jóval meghaladja az általunk elvártakat, így a mi céljainkra tökéletesen megfelel. A tranzisztorok kapcsolási feszültsége tipikusan _0.6V_ környékén van, így az _5V_-os Arduinot használhatjuk a _12V_-os ventilátor kapcsolására. Ez adja a tranzisztorok és más félvezetőkön alapuló alkatrészek nagy előnyét. Nagyon kicsi jellel tudunk sokkal nagyobb beavatkozásokat csinálni. A tranzisztorokról bővebben [ebben a YouTube videóban](https://www.youtube.com/watch?v=7ukDKVHnac4) hallhatsz. A videó angol, de állítható magyar felirat.
